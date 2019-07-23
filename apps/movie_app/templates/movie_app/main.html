@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/cde5077fb4.js"></script>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Main</title>
+    {% load static %}
+    <script src="{% static 'movie_app/js/script.js' %}"></script>
+</head>
+
+<body class="bg-dark">
+    <div class="navbar navbar-expand-md navbar-light sticky-top bg-light border-bottom">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/main">
+                <h1>Logo</h1>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/main">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">My Movies</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/search">Find a movie</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Review</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/account">Account</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-primary" href="/logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="container text-light p-3">
+            <h2 align="center">Movies in the theatres:</h2>
+            <div align="center" class="container">
+                <div class="row" id="showing">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="container-fluid bg-white col-lg-7 col-md-12 col-xs-12 col-sm-12 p-2">
+                <div class="row">
+                    <div class="container col-lg-6 col-md-6 col-xs-12 mt-2" align="center">
+                        <div class="card" style="width: 18rem;">
+                            <img src="{% static 'movie_app/images/sample_cinema.jpg' %}" class="card-img-top" alt="">
+                            <div class="card-body">
+                                <h5 class="card-title">Find Cinemas near you</h5>
+                                <p class="card-text">Some quick example text to build on the card title and make up the
+                                    bulk
+                                    of
+                                    the card's content.</p>
+                                <a href="#" class="btn btn-primary">Find Cinemas</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container col-lg-6 col-md-6 col-xs-12 mt-2" align="center">
+                        <div class="card" style="width: 18rem;">
+                            <img src="{% static 'movie_app/images/sample_movie.jpg' %}" class="card-img-top" alt="">
+                            <div class="card-body">
+                                <h5 class="card-title">Find a Movie</h5>
+                                <p class="card-text">Some quick example text to build on the card title and make up the
+                                    bulk
+                                    of
+                                    the card's content.</p>
+                                <a href="#" class="btn btn-primary">Find Movie</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid bg-light col-lg-5 col-md-12 col-xs-12 col-sm-12">
+                <h1 align="center">My reviews</h1>
+                <div class="container">
+                    <p class="m-0 font-weight-bold">Name_here</p>
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                        class="fas fa-star"></i><i class="fas fa-star"></i>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque consequat odio ligula, non
+                        scelerisque enim gravida quis. Orci varius natoque</p>
+                </div>
+                <div class="container">
+                    <p class="m-0 font-weight-bold">Name_here</p>
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                        class="fas fa-star"></i><i class="fas fa-star"></i>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque consequat odio ligula, non
+                        scelerisque enim gravida quis. Orci varius natoque</p>
+                </div>
+                <a href="#" class="float-right">See more</a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

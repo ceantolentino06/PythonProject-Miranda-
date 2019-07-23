@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/cde5077fb4.js"></script>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login</title>
+</head>
+
+<body class="bg-dark">
+    <div class="container-fluid">
+        <div class="container col-md-6 col-xs-12 col-xl-4 border mt-5 p-3 bg-light">
+            <h1 align="center">Logo</h1>
+            <form action="/login_post" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" class="form-control" name="username" id="username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" class="form-control" name="username" id="password">
+                </div>
+                <a href="#" class="float-right">Forgot password?</a>
+                <button type="submit" class="btn btn-primary mb-3">Login</button>
+            </form>
+            <p>Not a member yet? <a href="/register">Create an account</a></p>
+            <p>Or sign in with:</p>
+            <div class="container">
+                <div class="row">
+                    <a href=""><i class="fab fa-facebook-square mr-2" style="font-size: 40px; color: #3b5998;"></i></a>
+                    <a href=""><i class="fab fa-google-plus-square mr-2" style="font-size: 40px; color: #CC3333;"></i></a>
+                    <a href=""><i class="fab fa-linkedin mr-2" style="font-size: 40px; color: #0077B5;"></i></a>
+                    <a href=""><i class="fab fa-github-square mr-2" style="font-size: 40px; color: #211f1f;"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
