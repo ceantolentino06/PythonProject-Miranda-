@@ -8,40 +8,79 @@
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/cde5077fb4.js"></script>
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Main</title>
     {% load static %}
+    <script src="{% static 'movie_app/js/view.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'movie_app/css/modal.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'movie_app/css/view.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'movie_app/css/link-style.css' %}">
+    <style>
+        .responsive {
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%;
+        }
+
+        .responsive iframe {
+            position: absolute;
+            width: 95%;
+            height: 80%;
+        }
+
+        * {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        #logo {
+            width: 230px;
+            height: 60px;
+
+        }
+
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            margin-bottom: 20px
+        }
+
+        #buy-text {
+            cursor: pointer;
+        }
+
+        #genre li {
+            display: inline-block;
+        }
+    </style>
 </head>
 
 <body class="bg-dark">
     <div class="navbar navbar-expand-md navbar-light bg-light sticky-top border-bottom">
         <div class="container-fluid">
             <a class="navbar-brand" href="/main">
-                <h1>Logo</h1>
+                <img src="{% static 'movie_app/images/newlogo.png' %}" id="logo" />
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ml-auto">
+                <ul class="navbar-nav ml-auto font-weight-bold">
                     <li class="nav-item">
-                        <a class="nav-link" href="/main">Home</a>
+                        <a class="nav-link cool-link" href="/main">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">My Movies</a>
+                        <a class="nav-link cool-link" href="/search">Find a movie</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/search">Find a movie</a>
+                        <a class="nav-link cool-link" href="/find_cinema">Find cinemas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Review</a>
+                        <a class="nav-link cool-link" href="/account">My Profile</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/account">Account</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-primary" href="/logout">Logout</a>
+                        <a class="nav-link cool-link text-primary" href="/logout">Logout</a>
                     </li>
                 </ul>
             </div>
@@ -49,28 +88,214 @@
     </div>
     <div class="container-fluid pt-3">
         <div class="row">
-            <div class="container col-sm-5" align="center">
-                <img class="img-fluid" src="{{ poster }}" alt="">
+            <div class="container col-sm-5 text-white" align="center">
+                <div class="container">
+                    <img class="img-fluid w-75" src="{{ poster }}" alt="">
+                    <input type="hidden" name="movie_id" id="movie_id" value="{{ movie.id }}">
+                    <input type="hidden" name="user_reviews" id="user_reviews" value="{{ user_reviews }}">
+                    <input type="hidden" name="vote_count" id="vote_count" value="{{ movie.vote_count }}">
+                    <input type="hidden" name="user_count" id="user_count" value="{{ total_vote }}">
+                    <div class="container">
+                        {% if this_movie|length > 0 %}
+                        <a href="" class="btn badge badge-danger">Unwatch</a> ||
+                        <p class="d-inline-block badge badge-success"><i>Watched</i></p>
+                        {% else %}
+                        <a href="" class="btn badge badge-success">Watch Later</a> ||
+                        <button class="btn badge badge-primary" id="reviewbtn">Mark Watched</button>
+                        {% endif %}
+                    </div>
+                </div>
             </div>
             <div class="container col-sm-7 text-white mt-3">
                 <div class="info text-center">
-                    <h1>{{movie.original_title}}</h1>
+                    <h1 class="font-weight-bolder">{{movie.original_title}}</h1>
                     <h4>({{ movie.release_date }})</h4>
                     <h6>{{ movie.overview }}</h6>
                 </div>
-                <h4 class="mt-4">Ratings: </h4> <i class="fas fa-star"></i><i class="fas fa-star"></i><i
-                    class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                <div class="row mt-5">
-                    <div class="container col-6">
-                        <a href="">Add to watch</a>
-                    </div>
-                    <div class="container col-6">
-                        <a class="float-right" href="">Mark Watched</a>
+                <h4>Genres:</h4>
+                <ul id="genre">
+                    {% for genre in movie.genres %}
+                    <li class="mr-1">{{genre.name}}</li>
+                    {% endfor %}
+                </ul>
+                <h4 class="mt-1">IMDb Ratings: </h4>
+                <input type="hidden" id="rating" value="{{movie.vote_average}}">
+                <div class="stars-outer">
+                    <div class="stars-inner"></div>
+                </div>
+                <div class="content mt-4 col-sm-12">
+                    <div class="responsive">
+                        <div id="player"></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="container-fluid bg-light pt-3 pb-3">
+        <h2>User ratings</h2>
+        <div class="container">
+            {% if reviews|length > 0 %}
+            {% for review in reviews %}
+            <div class="container mb-3 border-bottom">
+                <a href="/{{review.created_by.id}}/user" class="m-0 font-weight-bold d-inline-block cool-link"
+                    style="text-decoration: none;">{{review.created_by.first_name}} {{review.created_by.last_name}}</a>
+                <br>
+                {% for i in '11111111111'|make_list %}
+                {% if forloop.counter|divisibleby:2 and forloop.counter <= review.rating%}
+                <i class="fas fa-star text-warning"></i>
+                {% elif forloop.counter|divisibleby:2 and forloop.counter > review.rating %}
+                <i class="fas fa-star text-secondary"></i>
+                {% endif %}
+                {% endfor %}
+                <p class="m-0">{{review.comment}}</p>
+                <small class="text-secondary m-0">{{ review.created_at }}</small>
+            </div>
+            {% endfor %}
+            {% else %}
+            <h2 class="text-center text-secondary border-bottom"><i>There are no reviews for this movie yet!</i></h2>
+            {% endif %}
+        </div>
+        <h2 id="cinemas" class="mb-3 cool-link d-inline-block">Watch on cinemas nearby <i id="arrow"
+                class="fas fa-caret-right"></i></h2>
+        <div id="showtimes-container">
+            <div class="buttons" align="center">
+                <span class="btn btn-success">Digital</span>
+                <span class="btn btn-primary">3D</span>
+            </div>
+            {% for cinema in showtimes.cinemas %}
+            <div class="container mb-3">
+                <h3>{{ cinema.name }} </h3>
+                <input type="hidden" id="{{ cinema.id }}">
+                <div class="row" id="showtimes">
+                    {% for date in cinema.dates %}
+                    <div class="container col-lg-4 col-md-6 col-sm-12 mt-4" id="showtimes" align="center">
+                        <h6>{{date}}</h6>
+                        {% for showtime in showtimes.showtimes %}
+                        {% if cinema.id == showtime.cinema_id and date == showtime.convdate %}
+                        {% if showtime.is_3d %}
+                        <a href="{{ showtime.booking_link }}" target="_blank"
+                            class="btn btn-primary btn-sm m-1 text-center col-3">{{ showtime.convtime }}</a>
+                        {% else %}
+                        <a href="{{ showtime.booking_link }}" target="_blank"
+                            class="btn btn-success btn-sm m-1 col-3 text-center">{{ showtime.convtime }}</a>
+                        {% endif %}
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="buy">
+            <h2 id="buy-text" class="cool-link d-inline-block">Buy and watch it online <i id="arrow-buy"
+                    class="fas fa-caret-right"></i></h2>
+            <div class="container" id="buy">
+                <div class="row">
+                    {% for link in buy_links %}
+                    <div class="container col-lg-4 col-md-6 col-xs-12 mt-2" id="card">
+                        <div class="card w-100" style="height: 270px">
+                            <div class="card-body">
+                                <h5 class="card-title font-weight-bolder">{{link.display_name}}</h5>
+                                <table class="table table-sm">
+                                    {% for format in link.formats %}
+                                    <tr>
+                                        <th scope="row" class="text-info">{{ format.format }}</th>
+                                        <td class="text-success">${{ format.price }}</td>
+                                        <td class="text-danger">{{ format.type }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </table>
+                                <a href="{{link.link}}" target="_blank"
+                                    class="card-link cool-link d-inline-block">Purchase link</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bg-modal" id="rating-modal">
+        <div class="modal-content p-2">
+            <div class="close" id="closebtn">+</div>
+            <h3 class="text-center">Write a review</h3>
+            <h4>{{ movie.title }}</h4>
+            <form action="/{{ movie.id }}/rate_movie" method="POST" id="rateForm">
+                {% csrf_token %}
+                <div class="rating">
+                    <input type="radio" name="star" id="star1" value="10"><label for="star1"></label>
+                    <input type="radio" name="star" id="star2" value="8"><label for="star2"></label>
+                    <input type="radio" name="star" id="star3" value="6"><label for="star3"></label>
+                    <input type="radio" name="star" id="star4" value="4"><label for="star4"></label>
+                    <input type="radio" name="star" id="star5" value="2"><label for="star5"></label>
+                </div>
+                <input type="hidden" name="movie_title" value="{{ movie.original_title }}">
+                <div class="container-fluid mt-5">
+                    <h6>Say something about this movie:</h6>
+                    <textarea class="form-control" name="comment" id="comment" cols="30" rows="5"></textarea>
+                </div>
+                <div id="rateMsg"></div>
+            </form>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="container-fluid text-light text-center p-2">
+            <small><i class="far fa-copyright"></i>2019 || Developed By: Cean Tolentino || <a href="/contact_me"
+                    class="cool-link d-inline-block text-warning" style="text-decoration: none;">Contact
+                    Me</a></small>
+        </div>
+    </div>
+    <script>
+        var movie_id = $('#movie_id').val()
+        console.log(movie_id)
+        var trailer_url = 'https://api.themoviedb.org/3/movie/' + movie_id + '/videos?api_key=5d576382955ff5829fc3844390db4427&language=en-US'
+        var key;
+        $.get(trailer_url, function (res) {
+            key = res['results'][0]['key'];
+        });
+        // 2. This code loads the IFrame Player API code asynchronously.
+        var tag = document.createElement('script');
+
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        // 3. This function creates an <iframe> (and YouTube player)
+        //    after the API code downloads.
+        var player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '390',
+                width: '640',
+                videoId: key,
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+
+        // 4. The API will call this function when the video player is ready.
+        function onPlayerReady(event) {
+            event.target.playVideo();
+        }
+
+        // 5. The API calls this function when the player's state changes.
+        //    The function indicates that when playing a video (state=1),
+        //    the player should play for six seconds and then stop.
+        var done = false;
+        function onPlayerStateChange(event) {
+            if (event.data == YT.PlayerState.PLAYING && !done) {
+                done = true;
+            }
+        }
+        function stopVideo() {
+            player.stopVideo();
+        }
+
+    </script>
+
 </body>
 
 </html>

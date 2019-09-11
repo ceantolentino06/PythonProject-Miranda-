@@ -13,7 +13,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Main</title>
     {% load static %}
-    <script src="{% static 'movie_app/js/search.js' %}"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'movie_app/css/link-style.css' %}">
     <style>
         * {
@@ -23,23 +22,22 @@
         #logo {
             width: 230px;
             height: 60px;
-
         }
     </style>
 </head>
 
-<body class="bg-dark">
-    <div class="navbar navbar-expand-md navbar-light bg-white sticky-top shadow" id="navbar">
+<body class="bg-light">
+    <div class="navbar navbar-expand-md navbar-dark bg-dark sticky-top" id="navbar">
         <div class="container-fluid">
             <a class="navbar-brand" href="/main">
-                <img src="{% static 'movie_app/images/newlogo.png' %}" id="logo" />
+                <img src="{% static 'movie_app/images/newlogo2.png' %}" id="logo" />
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto font-weight-bold">
-                    <li class="nav-item active">
+                    <li class="nav-item">
                         <a class="nav-link cool-link" href="/main">Home</a>
                     </li>
                     <li class="nav-item">
@@ -49,7 +47,7 @@
                         <a class="nav-link cool-link" href="/find_cinema">Find cinemas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link cool-link" href="/account">My Profile</a>
+                        <a class="nav-link cool-link active" href="/account">My Profile</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link cool-link text-primary" href="/logout">Logout</a>
@@ -58,20 +56,19 @@
             </div>
         </div>
     </div>
-    </div>
-    <div class="container mt-4">
-        <div class="jumbotron bg-white">
-            <h1 class="display-4">Search that Movie!</h1>
-            <hr class="my-4">
-            <input type="text" class="form-control col-6" name="search_text" id="search_text"
-                placeholder="Enter Movie Title">
-            <button type="submit" class="btn btn-primary btn-lg mt-2" id="search">Search</button>
+    <div class="container mt-2">
+        <h1 class="font-weight-bold">Cinemas Nearby:</h1>
+        {% for cinema in cinemas %}
+        <div class="container">
+            <h4 class="text-info font-weight-bolder mb-0">{{cinema.name}}</h4>
+            <span class="ml-2 d-block">Website: <a href="{{cinema.website}}">{{cinema.website}}</a></span>
+            <span class="ml-2 d-block">Telephone: {{cinema.telephone}}</span>
+            <h6 class="text-success">{{cinema.location.address.display_text}}</h6>
         </div>
-        <div class="container row text-white" id="results">
-
-        </div>
+        <hr>
+        {% endfor %}
     </div>
-    <footer class="footer mt-auto py-3">
+    <footer class="footer mt-auto py-3 bg-dark">
         <div class="container-fluid text-light text-center">
             <small><i class="far fa-copyright"></i>2019 || Developed By: Cean Tolentino || <a href="/contact_me"
                     class="cool-link d-inline-block text-warning" style="text-decoration: none;">Contact

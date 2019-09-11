@@ -9,48 +9,73 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="https://kit.fontawesome.com/cde5077fb4.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Bangers&display=swap" rel="stylesheet">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Main</title>
     {% load static %}
     <script src="{% static 'movie_app/js/script.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'movie_app/css/link-style.css' %}">
+    <style>
+        * {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        #logo {
+            width: 230px;
+            height: 60px;
+
+        }
+
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            margin-bottom: 20px
+        }
+    </style>
 </head>
 
 <body class="bg-dark">
-    <div class="navbar navbar-expand-md navbar-light sticky-top bg-light border-bottom">
+    <div class="navbar navbar-expand-md navbar-light bg-white sticky-top shadow" id="navbar">
         <div class="container-fluid">
             <a class="navbar-brand" href="/main">
-                <h1>Logo</h1>
+                <img src="{% static 'movie_app/images/newlogo.png' %}" id="logo" />
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ml-auto">
+                <ul class="navbar-nav ml-auto font-weight-bold">
                     <li class="nav-item active">
-                        <a class="nav-link" href="/main">Home</a>
+                        <a class="nav-link cool-link" href="/main">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">My Movies</a>
+                        <a class="nav-link cool-link" href="/search">Find a movie</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/search">Find a movie</a>
+                        <a class="nav-link cool-link" href="/find_cinema">Find cinemas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Review</a>
+                        <a class="nav-link cool-link" href="/account">My Profile</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/account">Account</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-primary" href="/logout">Logout</a>
+                        <a class="nav-link cool-link text-primary" href="/logout">Logout</a>
                     </li>
                 </ul>
             </div>
         </div>
     </div>
-    <div class="container-fluid">
+    <div class="message ml-3">
+        {% if messages %}
+        {% for message in messages %}
+        {% ifequal message.tags 'userflash info' %}
+        <p class="text-info d-inline-block m-0">{{ message }} Welcome, {{ request.session.fname }}!</p>
+        {% endifequal %}
+        {% endfor %}
+        {% endif %}
+    </div>
+    <div class="container">
         <div class="container text-light p-3">
-            <h2 align="center">Movies in the theatres:</h2>
+            <h1 align="center" style="font-family: 'Bangers', cursive;" id="movie_showing">Movies in the theatres:</h1>
             <div align="center" class="container">
                 <div class="row" id="showing">
                 </div>
@@ -59,54 +84,66 @@
     </div>
     <div class="container-fluid">
         <div class="row">
-            <div class="container-fluid bg-white col-lg-7 col-md-12 col-xs-12 col-sm-12 p-2">
+            <div class="container-fluid bg-white col-lg-7 col-md-12 col-xs-12 col-sm-12 p-3">
                 <div class="row">
                     <div class="container col-lg-6 col-md-6 col-xs-12 mt-2" align="center">
-                        <div class="card" style="width: 18rem;">
+                        <div class="card w-100">
                             <img src="{% static 'movie_app/images/sample_cinema.jpg' %}" class="card-img-top" alt="">
                             <div class="card-body">
-                                <h5 class="card-title">Find Cinemas near you</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the
-                                    bulk
-                                    of
-                                    the card's content.</p>
-                                <a href="#" class="btn btn-primary">Find Cinemas</a>
+                                <h5 class="card-title font-weight-bolder">Find Cinemas near you</h5>
+                                <p class="card-text">Your most anticipated movie is now showing? Let's go find cinemas
+                                    nearby what are you waiting for?!
+                                </p>
+                                <a href="/find_cinema" class="btn btn-primary">Find Cinemas</a>
                             </div>
                         </div>
                     </div>
                     <div class="container col-lg-6 col-md-6 col-xs-12 mt-2" align="center">
-                        <div class="card" style="width: 18rem;">
+                        <div class="card w-100">
                             <img src="{% static 'movie_app/images/sample_movie.jpg' %}" class="card-img-top" alt="">
                             <div class="card-body">
-                                <h5 class="card-title">Find a Movie</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the
-                                    bulk
-                                    of
-                                    the card's content.</p>
-                                <a href="#" class="btn btn-primary">Find Movie</a>
+                                <h5 class="card-title font-weight-bolder">Find a Movie</h5>
+                                <p class="card-text">Need some help finding your favorite movies? Click here and I'll
+                                    help you!</p>
+                                <a href="/search" class="btn btn-primary mt-4">Find Movie</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="container-fluid bg-light col-lg-5 col-md-12 col-xs-12 col-sm-12">
-                <h1 align="center">My reviews</h1>
-                <div class="container">
-                    <p class="m-0 font-weight-bold">Name_here</p>
-                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
-                        class="fas fa-star"></i><i class="fas fa-star"></i>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque consequat odio ligula, non
-                        scelerisque enim gravida quis. Orci varius natoque</p>
+            <div class="container-fluid bg-light col-lg-5 col-md-12 col-xs-12 col-sm-12 p-3">
+                <h1 align="center">My Latest Reviews</h1>
+                {% if user.my_reviews.all|length > 0 %}
+                {% for review in reviews %}
+                <div class="container mb-3 border-bottom">
+                    <a href="/{{review.movie_id}}/view" class="m-0 font-weight-bolder cool-link d-inline-block"
+                        style="text-decoration: none;">{{ review.movie_title }}</a>
+                    <br>
+                    {% for i in '11111111111'|make_list %}
+                    {% if forloop.counter|divisibleby:2 and forloop.counter <= review.rating%}
+                    <i class="fas fa-star text-warning"></i>
+                    {% elif forloop.counter|divisibleby:2 and forloop.counter > review.rating %}
+                    <i class="fas fa-star text-secondary"></i>
+                    {% endif %}
+                    {% endfor %}
+                    <p class="m-0">{{ review.comment }}</p>
+                    <small class="text-secondary">{{ review.created_at }}</small>
                 </div>
-                <div class="container">
-                    <p class="m-0 font-weight-bold">Name_here</p>
-                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
-                        class="fas fa-star"></i><i class="fas fa-star"></i>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque consequat odio ligula, non
-                        scelerisque enim gravida quis. Orci varius natoque</p>
-                </div>
-                <a href="#" class="float-right">See more</a>
+                {% endfor %}
+                {% else %}
+                <h3 class="font-italic border-bottom text-center text-secondary">You haven't reviewed any movies yet!
+                </h3>
+                {% endif %}
+                <a href="/account" class="ml-3 cool-link d-inline-block" style="text-decoration: none;">See all my
+                    reviews</a>
             </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="container-fluid text-light text-center p-2">
+            <small><i class="far fa-copyright"></i>2019 || Developed By: Cean Tolentino || <a href="/contact_me"
+                    class="cool-link d-inline-block text-warning" style="text-decoration: none;">Contact
+                    Me</a></small>
         </div>
     </div>
 </body>

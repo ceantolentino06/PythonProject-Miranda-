@@ -1,0 +1,11 @@
+
+{% if valid == False %}
+<small class="text-danger">Username should be at least 3 characters.</small>
+{% else %}
+{% if found == True %}
+<small class="text-danger">Username has been taken.</small>
+{% endif %}
+{% if found == False %}
+<small class="text-success"> This username is available</small>
+{% endif %}
+{% endif %}

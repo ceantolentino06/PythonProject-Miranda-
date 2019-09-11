@@ -7,14 +7,43 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/cde5077fb4.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Bangers&display=swap" rel="stylesheet">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load socialaccount %}
+    {% providers_media_js %}
+    {% load static %}
     <title>Login</title>
+    <style>
+        * {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background-color: #8B0C32;
+        }
+
+        #login {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+    </style>
 </head>
 
-<body class="bg-dark">
+<body>
     <div class="container-fluid">
-        <div class="container col-md-6 col-xs-12 col-xl-4 border mt-5 p-3 bg-light">
-            <h1 align="center">Logo</h1>
+        <div class="container col-md-6 col-xs-12 col-xl-4 border mt-5 p-3 bg-light rounded" id="login">
+            <div class="navbar-brand">
+                <img src="{% static 'movie_app/images/logo_transparent_background.png' %}" class="w-100" />
+            </div>
+            <div class="message text-center">
+                {% if messages %}
+                {% for message in messages %}
+                {% ifequal message.tags 'loginError info' %}
+                <small class="text-danger">{{ message }}</small>
+                {% endifequal %}
+                {% endfor %}
+                {% endif %}
+            </div>
             <form action="/login_post" method="POST">
                 {% csrf_token %}
                 <div class="form-group">
@@ -23,21 +52,27 @@
                 </div>
                 <div class="form-group">
                     <label for="password">Password:</label>
-                    <input type="password" class="form-control" name="username" id="password">
+                    <input type="password" class="form-control" name="password" id="password">
                 </div>
                 <a href="#" class="float-right">Forgot password?</a>
                 <button type="submit" class="btn btn-primary mb-3">Login</button>
             </form>
             <p>Not a member yet? <a href="/register">Create an account</a></p>
-            <p>Or sign in with:</p>
-            <div class="container">
-                <div class="row">
-                    <a href=""><i class="fab fa-facebook-square mr-2" style="font-size: 40px; color: #3b5998;"></i></a>
-                    <a href=""><i class="fab fa-google-plus-square mr-2" style="font-size: 40px; color: #CC3333;"></i></a>
-                    <a href=""><i class="fab fa-linkedin mr-2" style="font-size: 40px; color: #0077B5;"></i></a>
-                    <a href=""><i class="fab fa-github-square mr-2" style="font-size: 40px; color: #211f1f;"></i></a>
+            <div class="container text-center border-top">
+                <p>Or sign in with:</p>
+                <div class="container">
+                    <a href="{% provider_login_url "facebook" method="js_sdk" %}"><i class="fab fa-facebook-square mr-2 social"
+                            style="font-size: 40px; color: #3b5998;"></i></a>
+                    <a href=""><i class="fab fa-google-plus-square mr-2 social"
+                            style="font-size: 40px; color: #CC3333;"></i></a>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="container-fluid text-light text-center p-2">
+            <small><i class="far fa-copyright"></i>2019 || Developed By: Cean Tolentino || <a href="/contact_me" class="cool-link d-inline-block" style="text-decoration: none;">Contact
+                Me</a></small>
         </div>
     </div>
 </body>

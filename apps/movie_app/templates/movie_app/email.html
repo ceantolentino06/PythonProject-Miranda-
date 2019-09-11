@@ -1,0 +1,10 @@
+{% if valid == False %}
+<small class="text-danger">Please Enter a Valid Email</small>
+{% else %}
+{% if found == True %}
+<small class="text-danger">Email has been taken.</small>
+{% endif %}
+{% if found == False %}
+<small class="text-success"> This Email is available</small>
+{% endif %}
+{% endif %}

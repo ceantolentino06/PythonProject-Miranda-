@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/cde5077fb4.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Bangers&display=swap" rel="stylesheet">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load static %}
+    <title>Contact Me</title>
+    <style>
+        * {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background-color: #8B0C32;
+        }
+
+        #login {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+
+        #logo {
+            width: 230px;
+            height: 60px;
+        }
+
+        #navbar {
+            background-color: transparent;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar navbar-expand-md navbar-dark" id="navbar">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/main">
+                <img src="{% static 'movie_app/images/newlogo2.png' %}" id="logo" />
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto font-weight-bold">
+                    <li class="nav-item">
+                        <a class="nav-link cool-link" href="/main">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link cool-link" href="/search">Find a movie</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link cool-link" href="/find_cinema">Find cinemas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link cool-link active" href="/account">My Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link cool-link text-primary" href="/logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="container col-md-6 col-xs-12 col-xl-4 border mt-5 p-3 bg-light rounded" id="login">
+            <h1 class="font-weight-bolder">Contact Me</h1>
+            <form action="/send_email" method="POST">
+                {% csrf_token %}
+                <div class="form-group font-weight-bolder">
+                    <label for="name">Name:</label>
+                    <input class="form-control" type="text" name="name" id="name" required>
+                </div>
+                <div class="form-group font-weight-bolder">
+                    <label for="name">Email Address:</label>
+                    <input class="form-control" type="text" name="email" id="email" required>
+                </div>
+                <div class="form-group font-weight-bolder">
+                    <label for="name">Subject:</label>
+                    <input class="form-control" type="text" name="subj" id="subj" required>
+                </div>
+                <div class="form-group font-weight-bolder">
+                    <label for="name">Message:</label>
+                    <textarea class="form-control" name="message" id="message" cols="30" rows="10" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary col-sm-12">Send</button>
+            </form>
+        </div>
+        <div class="footer">
+            <div class="container-fluid text-light text-center p-2">
+                <small><i class="far fa-copyright"></i>2019 || Developed By: Cean Tolentino || <a href="/contact_me"
+                        class="cool-link d-inline-block" style="text-decoration: none;">Contact
+                        Me</a></small>
+            </div>
+        </div>
+</body>
+
+</html>

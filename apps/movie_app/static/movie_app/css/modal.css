@@ -1,0 +1,79 @@
+.bg-modal {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.7);
+    position: absolute;
+    top: 0;
+    justify-content: center;
+    align-items: center;
+    display: none;
+    animation-name: modalopen;
+    animation-duration: .8s;
+}
+
+.close {
+    position: absolute;
+    top: 0;
+    right: 5px;
+    transform: rotate(45deg);
+    cursor: pointer;
+}
+
+.modal-content{
+    width: 400px;
+    background-color: white;
+    border-radius: 4px;
+    position: relative;
+}
+
+.rating {
+    position: absolute;
+    top: 30%;
+    left: 23%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.rating input{
+    display: none;
+}
+
+.rating label {
+    display: block;
+    cursor: pointer;
+    width: 31px;
+}
+
+.rating label:before {
+    content: '\f006';
+    font-family: fontAwesome;
+    position: relative;
+    display: block;
+    font-size: 30px;
+    color: #101010;
+}
+
+.rating label:after {
+    content: '\f005';
+    font-family: fontAwesome;
+    font-weight: regular;
+    position: absolute;
+    display: block;
+    font-size: 30px;
+    color: #FFD700;
+    top: 0;
+    opacity: 0;
+    transition: .2s;
+    text-shadow: 0 2px 5px rgba(0,0,0,.5)
+}
+
+.rating label:hover:after,
+.rating input:checked ~ label:after {
+    opacity: 1;
+}
+
+@keyframes modalopen {
+    from{opacity: 0;}
+    to {opacity: 1;}
+}

@@ -32,13 +32,13 @@
 </head>
 
 <body class="bg-light">
-    <div class="navbar navbar-expand-md navbar-dark bg-dark sticky-top" id="navbar">
+    <div class="navbar navbar-expand-md navbar-dark bg-dark sticky-top border-bottom">
         <div class="container-fluid">
             <a class="navbar-brand" href="/main">
                 <img src="{% static 'movie_app/images/newlogo2.png' %}" id="logo" />
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
-                <span class="navbar-toggler-icon"></span>
+                <span terclass="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto font-weight-bold">
@@ -82,25 +82,23 @@
                         </div>
                     </div>
                 </div>
-                <div class="search-users mt-4">
-                    <h6>Search other users:</h6>
-                    <form action="/search_user" method="POST">
-                        {% csrf_token %}
-                        <input class="form-control" type="text" name="username" id="username"
-                            placeholder="Enter username">
-                        <button type="submit" class="btn btn-primary btn-sm mt-2">Search</button>
-                    </form>
+                <div class="container">
+                    {% if is_followed  %}
+                    <p class="badge badge-success p-1">Following</p>
+                    {% else %}
+                    <a href="/{{ user.id }}/follow" class="btn badge badge-primary">Follow</a>
+                    {% endif %}
                 </div>
+
             </div>
             <div class="container col-lg-8 col-md-7 col-sm-12">
-                <h2 align="center">My reviews</h2>
+                <h2 align="center">{{user.first_name}}'s reviews</h2>
                 <input type="hidden" name="revs" id="revs" value="{{ rev_dict }}">
-                {% if user.my_reviews.all|length > 0 %}
-                {% for review in reviews %}
+                {% for review in user.my_reviews.all %}
                 <div class="container mb-3 border-bottom">
                     <a href="/{{review.movie_id}}/view" class="m-0 font-weight-bolder cool-link d-inline-block"
                         style="text-decoration: none;">{{ review.movie_title }}</a>
-                    <br>
+                        <br>
                     {% for i in '11111111111'|make_list %}
                     {% if forloop.counter|divisibleby:2 and forloop.counter <= review.rating%}
                     <i class="fas fa-star text-warning"></i>
@@ -140,21 +138,16 @@
                         </ul>
                     </span>
                 </div>
-                {% else %}
-                <h3 class="font-italic border-bottom text-center text-secondary">You haven't reviewed any movies yet!
-                </h3>
-                {% endif %}
-
             </div>
         </div>
     </div>
     <div class="container-fluid bg-dark p-3">
-        <h2 class="text-white text-center mb-3 font-weight-bolder">Movies I watched</h2>
+        <h2 class="text-white text-center mb-3 font-weight-bolder">Movies {{user.first_name}} watched</h2>
         <div class="container-fluid">
             <div class="swiper-container m-0">
                 <div class="swiper-wrapper">
                     {% for like in likes %}
-                    <a href="{{like.movie_id}}/view" class="swiper-slide"
+                    <a href="/{{like.id}}/view" class="swiper-slide"
                         style="background-image: url('https://image.tmdb.org/t/p/w500{{ like.poster_path }}')"></a>
                     {% endfor %}
                 </div>
@@ -162,20 +155,10 @@
                 <div class="swiper-pagination"></div>
             </div>
         </div>
-        <div class="jumbotron mt-4">
-            <h1 class="display-4">Contact Me</h1>
-            <p class="lead">Do you have issues about the app or suggestions that will make the app better? I'll be glad
-                to hear them!</p>
-            <hr class="my-4">
-            <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-            <a class="btn btn-primary btn-lg" href="" role="button">Contact Me</a>
-        </div>
     </div>
     <div class="footer">
         <div class="container-fluid text-center p-2">
-            <small><i class="far fa-copyright"></i>2019 || Developed By: Cean Tolentino || <a href="/contact_me"
-                    class="cool-link d-inline-block" style="text-decoration: none;">Contact
-                    Me</a></small>
+            <small><i class="far fa-copyright"></i>2019 || Developed By: Cean Tolentino</small>
         </div>
     </div>
     <script rel="stylesheet" type="text/javascript" src="{% static 'movie_app/js/swiper.min.js' %}"></script>
